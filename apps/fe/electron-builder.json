@@ -1,0 +1,38 @@
+{
+  "appId": "com.fbcrawler.app",
+  "productName": "FB Crawler",
+  "directories": {
+    "output": "release"
+  },
+  "files": [
+    "main.cjs",
+    "preload.cjs",
+    ".output/**/*",
+    "package.json"
+  ],
+  "asarUnpack": [
+    "node_modules/playwright/**/*",
+    "node_modules/playwright-core/**/*"
+  ],
+  "win": {
+    "target": [
+      {
+        "target": "nsis",
+        "arch": ["x64"]
+      }
+    ],
+    "icon": "public/icon.ico"
+  },
+  "mac": {
+    "target": ["dmg"],
+    "icon": "public/icon.icns"
+  },
+  "linux": {
+    "target": ["AppImage"],
+    "icon": "public/icon.png"
+  },
+  "nsis": {
+    "oneClick": false,
+    "allowToChangeInstallationDirectory": true
+  }
+}

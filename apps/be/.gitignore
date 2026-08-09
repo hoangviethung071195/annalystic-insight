@@ -1,0 +1,7 @@
+node_modules/
+dist/
+user_data_dir/
+*.db
+.env
+.env.*
+*.log

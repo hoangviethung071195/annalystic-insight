@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build outputs
+dist/
+.nuxt/
+.output/
+apps/be/dist/
+apps/fe/.output/
+apps/fe/release/
+
+# Browser data (Playwright)
+user_data_dir/
+apps/be/user_data_dir/
+
+# Database
+*.db
+apps/be/data/*.db
+
+# Environment
+.env
+.env.local
+.env.production
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Cache
+.cache/
+.turbo/

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Báo cáo Phân tích Thị trường WNDI | 303498828705021</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&family=Fraunces:opsz,wght@9..144,500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fff7f9;
+  --bg2: #ffffff;
+  --ink: #1f1220;
+  --muted: #6b5b66;
+  --line: #f0d7e0;
+  --rose: #e11d48;
+  --pink: #db2777;
+  --violet: #7c3aed;
+  --blue: #2563eb;
+  --green: #059669;
+  --amber: #d97706;
+  --shadow: 0 10px 40px rgba(225,29,72,.08);
+  --radius: 18px;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "Be Vietnam Pro", system-ui, sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(1200px 600px at 10% -10%, #ffe4ec 0%, transparent 60%),
+    radial-gradient(900px 500px at 100% 0%, #ede9fe 0%, transparent 50%),
+    var(--bg);
+  line-height: 1.55;
+}
+.wrap { max-width: 1180px; margin: 0 auto; padding: 28px 20px 80px; }
+.hero {
+  background: linear-gradient(135deg, #881337 0%, #be123c 40%, #db2777 75%, #a78bfa 100%);
+  color: #fff;
+  border-radius: 28px;
+  padding: 36px 36px 32px;
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+.hero::after {
+  content: "";
+  position: absolute; right: -40px; top: -40px;
+  width: 220px; height: 220px; border-radius: 50%;
+  background: rgba(255,255,255,.12);
+}
+.hero .eyebrow {
+  display: inline-flex; gap: 8px; align-items: center;
+  background: rgba(255,255,255,.15);
+  border: 1px solid rgba(255,255,255,.25);
+  padding: 6px 12px; border-radius: 999px;
+  font-size: 12px; letter-spacing: .04em; text-transform: uppercase;
+}
+.hero h1 {
+  font-family: Fraunces, Georgia, serif;
+  font-size: clamp(1.7rem, 3.5vw, 2.5rem);
+  margin: 14px 0 8px; line-height: 1.2;
+}
+.hero p.lead { max-width: 62ch; opacity: .92; margin: 0 0 18px; font-weight: 300; }
+.hero-meta { display: flex; flex-wrap: wrap; gap: 10px 18px; font-size: 13px; opacity: .9; }
+.hero a { color: #fff; }
+section {
+  margin-top: 36px;
+}
+.section-head {
+  display: flex; align-items: end; justify-content: space-between;
+  gap: 12px; margin-bottom: 14px;
+}
+.section-head h2 {
+  font-family: Fraunces, Georgia, serif;
+  font-size: 1.45rem; margin: 0;
+}
+.section-head p { margin: 0; color: var(--muted); font-size: 14px; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.card {
+  background: var(--bg2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+.card h3 { margin: 0 0 12px; font-size: 1rem; }
+.card.accent-want { border-top: 4px solid var(--pink); }
+.card.accent-need { border-top: 4px solid var(--blue); }
+.card.accent-demand { border-top: 4px solid var(--green); }
+.muted { color: var(--muted); font-size: 13px; }
+.bar-row { display: grid; grid-template-columns: 1fr 1.4fr 36px; gap: 8px; align-items: center; margin-bottom: 12px; }
+.bar-label { font-size: 12.5px; color: var(--ink); line-height: 1.3; }
+.bar-track { height: 8px; background: #fce7f3; border-radius: 99px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 99px; }
+.bar-val { font-size: 12px; font-weight: 600; text-align: right; color: var(--muted); }
+.insight-card {
+  display: grid; grid-template-columns: 48px 1fr; gap: 14px;
+  background: var(--bg2); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 18px; margin-bottom: 10px;
+  box-shadow: var(--shadow);
+}
+.insight-num {
+  width: 48px; height: 48px; border-radius: 14px;
+  background: #fdf2f8; color: var(--rose);
+  display: flex; align-items: center; justify-content: center;
+  font-family: Fraunces, Georgia, serif; font-weight: 700; font-size: 1.1rem;
+}
+.insight-card h3 { margin: 0 0 6px; font-size: 1rem; }
+.insight-card p { margin: 0; color: var(--muted); font-size: 14px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 11px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+.rec {
+  display: grid; grid-template-columns: 90px 1fr; gap: 12px; align-items: start;
+  padding: 12px 0; border-bottom: 1px solid var(--line);
+}
+.rec:last-child { border-bottom: 0; }
+.rec-tag {
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  background: #ede9fe; color: #5b21b6; border-radius: 8px;
+  padding: 6px 8px; text-align: center;
+}
+.rec p { margin: 0; font-size: 14px; }
+.chart-box { position: relative; height: 280px; }
+.footer {
+  margin-top: 40px; text-align: center; color: var(--muted); font-size: 12px;
+}
+@media (max-width: 960px) {
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="eyebrow">Apify · Facebook Groups Scraper · W–N–D–I Report</div>
+    <h1>303498828705021 — Want · Need · Demand · Insight</h1>
+    <p class="lead">Báo cáo phân tích insight thị trường dựa trên bộ dữ liệu Facebook cào sẵn.</p>
+    <div class="hero-meta">
+      <span>📁 Nhóm: 303498828705021</span>
+      <span>🗓️ Tạo báo cáo: 8/9/2026, 4:34:39 AM</span>
+      <span>🤖 Nguồn: Apify facebook-groups-scraper</span>
+    </div>
+  </header>
+
+  <section>
+    <div class="section-head">
+      <h2>Tóm tắt điều hành (1 phút)</h2>
+    </div>
+    <div class="card">
+      <ul style="margin: 0; padding-left: 20px; font-size: 15px; line-height: 1.6;">
+        <li style="margin-bottom:8px">Nhóm Facebook này đang hoạt động như một kênh kết nối việc làm năng động, tập trung chủ yếu vào các vị trí sales, tư vấn và dịch vụ cho đối tượng lao động trẻ, chưa có nhiều kinh nghiệm.</li><li style="margin-bottom:8px">Các bài đăng tuyển dụng nổi bật với mức lương hấp dẫn (10-30 triệu) và mô hình làm việc linh hoạt, trong khi đó, một bài đăng về dịch vụ logistics cho thấy nhu cầu hỗ trợ cho các shop online.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Bức tranh chủ đề & loại bài</h2>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <h3>Phân bố chủ đề</h3>
+        <div class="chart-box"><canvas id="chartTopics"></canvas></div>
+      </div>
+      <div class="card">
+        <h3>Loại nội dung</h3>
+        <div class="chart-box"><canvas id="chartTypes"></canvas></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Want · Need · Demand</h2>
+      <p>Số bài chạm tín hiệu phân tích bởi AI</p>
+    </div>
+    <div class="grid-3">
+      <div class="card accent-want">
+        <h3>💖 Top Wants</h3>
+        
+    <div class="bar-row">
+      <div class="bar-label">Mong muốn có thu nhập cao và ổn định (10-30 triệu/tháng)</div>
+      <div class="bar-track"><div class="bar-fill" style="width:100%;background:#db2777"></div></div>
+      <div class="bar-val">4</div>
+    </div>
+  
+    <div class="bar-row">
+      <div class="bar-label">Mong muốn tìm được công việc phù hợp với bản thân (không yêu cầu kinh nghiệm, thời gian linh hoạt)</div>
+      <div class="bar-track"><div class="bar-fill" style="width:75%;background:#db2777"></div></div>
+      <div class="bar-val">3</div>
+    </div>
+  
+    <div class="bar-row">
+      <div class="bar-label">Mong muốn được đào tạo và phát triển kỹ năng (sales, truyền thông, thuyết trình)</div>
+      <div class="bar-track"><div class="bar-fill" style="width:50%;background:#db2777"></div></div>
+      <div class="bar-val">2</div>
+    </div>
+  
+      </div>
+      <div class="card accent-need">
+        <h3>🔍 Top Needs</h3>
+        
+    <div class="bar-row">
+      <div class="bar-label">Nhu cầu tìm kiếm ứng viên cho các vị trí nhân viên kinh doanh, tư vấn bán hàng, khảo sát thị trường</div>
+      <div class="bar-track"><div class="bar-fill" style="width:100%;background:#2563eb"></div></div>
+      <div class="bar-val">4</div>
+    </div>
+  
+    <div class="bar-row">
+      <div class="bar-label">Nhu cầu tìm kiếm giải pháp vận chuyển giá rẻ (11k/đơn) cho các shop bán hàng online</div>
+      <div class="bar-track"><div class="bar-fill" style="width:25%;background:#2563eb"></div></div>
+      <div class="bar-val">1</div>
+    </div>
+  
+    <div class="bar-row">
+      <div class="bar-label">Nhu cầu tìm kiếm việc làm phổ thông (bốc xếp, phụ bếp, cơ khí...) cho người lao động tự do</div>
+      <div class="bar-track"><div class="bar-fill" style="width:25%;background:#2563eb"></div></div>
+      <div class="bar-val">1</div>
+    </div>
+  
+      </div>
+      <div class="card accent-demand">
+        <h3>🛒 Top Demands</h3>
+        
+    <div class="bar-row">
+      <div class="bar-label">Trung tâm đào tạo lái xe VOV</div>
+      <div class="bar-track"><div class="bar-fill" style="width:100%;background:#059669"></div></div>
+      <div class="bar-val">1</div>
+    </div>
+  
+    <div class="bar-row">
+      <div class="bar-label">FPT Shop Quế Võ</div>
+      <div class="bar-track"><div class="bar-fill" style="width:100%;background:#059669"></div></div>
+      <div class="bar-val">1</div>
+    </div>
+  
+    <div class="bar-row">
+      <div class="bar-label">Công ty công nghệ bảo hiểm ô tô</div>
+      <div class="bar-track"><div class="bar-fill" style="width:100%;background:#059669"></div></div>
+      <div class="bar-val">1</div>
+    </div>
+  
+    <div class="bar-row">
+      <div class="bar-label">Dịch vụ SPX (vận chuyển)</div>
+      <div class="bar-track"><div class="bar-fill" style="width:100%;background:#059669"></div></div>
+      <div class="bar-val">1</div>
+    </div>
+  
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Ý kiến / Insight đúc kết</h2>
+    </div>
+    
+    <div class="insight-card">
+      <div class="insight-num">01</div>
+      <div>
+        <h3>Thị trường việc làm đa dạng, tập trung vào lực lượng trẻ và chưa có kinh nghiệm</h3>
+        <p>Các bài đăng tuyển dụng đều hướng tới đối tượng sinh viên mới ra trường, người trẻ 18-28 tuổi, chưa có kinh nghiệm. Điều này cho thấy nhu cầu tuyển dụng lớn ở phân khúc lao động phổ thông và mới bắt đầu sự nghiệp, đặc biệt trong lĩnh vực sales, tư vấn và dịch vụ.</p>
+      </div>
+    </div>
+  
+    <div class="insight-card">
+      <div class="insight-num">02</div>
+      <div>
+        <h3>Mô hình làm việc linh hoạt và thu nhập theo hiệu quả là điểm thu hút chính</h3>
+        <p>Các nhà tuyển dụng nhấn mạnh vào thời gian làm việc linh động, không bó buộc giờ giấc và mức lương thưởng theo doanh số (10-30 triệu/tháng). Điều này phản ánh xu hướng lao động hiện đại ưa chuộng sự tự do và cơ hội kiếm tiền dựa trên năng lực cá nhân.</p>
+      </div>
+    </div>
+  
+    <div class="insight-card">
+      <div class="insight-num">03</div>
+      <div>
+        <h3>Kênh Facebook Group đang được sử dụng hiệu quả như một chợ việc làm phi chính thức</h3>
+        <p>Các bài đăng tuyển dụng và tìm việc được đăng tải trực tiếp trên group, sử dụng ngôn ngữ thân thiện, gần gũi, kèm theo số điện thoại/Zalo để liên hệ. Điều này cho thấy Facebook Group là một kênh kết nối cung - cầu lao động nhanh chóng và hiệu quả cho các doanh nghiệp vừa và nhỏ, cũng như người lao động tự do.</p>
+      </div>
+    </div>
+  
+    <div class="insight-card">
+      <div class="insight-num">04</div>
+      <div>
+        <h3>Nhu cầu về dịch vụ hỗ trợ bán hàng online (logistics) đang tăng</h3>
+        <p>Bài đăng quảng cáo dịch vụ vận chuyển SPX với chi phí 11k/đơn cho thấy nhu cầu của các shop online trong việc tối ưu chi phí vận hành. Đây là một mảnh ghép quan trọng trong hệ sinh thái thương mại điện tử đang phát triển.</p>
+      </div>
+    </div>
+  
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Khuyến nghị hành động</h2>
+    </div>
+    <div class="card">
+      
+    <div class="rec">
+      <span class="rec-tag">Content</span>
+      <p>Tạo các bài viết hướng dẫn, chia sẻ kinh nghiệm viết CV, kỹ năng phỏng vấn, và các mẹo tìm việc hiệu quả trên các nền tảng mạng xã hội để thu hút nhóm người lao động trẻ đang có nhu cầu tìm việc.</p>
+    </div>
+  
+    <div class="rec">
+      <span class="rec-tag">Product</span>
+      <p>Phát triển các giải pháp phần mềm quản lý tuyển dụng (ATS) hoặc nền tảng kết nối việc làm chuyên biệt cho các group Facebook, giúp nhà tuyển dụng và ứng viên quản lý hồ sơ và quy trình tuyển dụng bài bản hơn.</p>
+    </div>
+  
+    <div class="rec">
+      <span class="rec-tag">Community</span>
+      <p>Xây dựng cộng đồng 'Hội những người trẻ tìm việc' hoặc 'Câu lạc bộ Sales trẻ' trên Facebook để tạo ra một không gian chia sẻ kinh nghiệm, cơ hội việc làm và kết nối giữa các thành viên, từ đó tăng độ tương tác và giá trị cho group.</p>
+    </div>
+  
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Danh sách bài viết tiêu biểu</h2>
+    </div>
+    <div class="card" style="overflow-x:auto;">
+      <table>
+        <thead>
+          <tr>
+            <th>Nội dung</th>
+            <th>Want</th>
+            <th>Need</th>
+            <th>Demand</th>
+            <th>Tương tác</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+    <tr>
+      <td>VP Trung tâm đào tạo lái xe VOV tuyển dụng nhân viên khảo sát thị trường và tư vấn học lái xe fulltime... Lương 15 - 30 triệu/ tháng... CÁC BẠN SINH VIÊN MỚI RA TRƯỜNG CHƯA CÓ VIỆC LÀM VỀ ĐỘI MÌNH NHA</td>
+      <td>Mong muốn có thu nhập cao (15-30 triệu), công việc linh hoạt và được đào tạo kỹ năng.</td>
+      <td>Cần tìm kiếm một công việc toàn thời gian phù hợp với sinh viên mới ra trường, không yêu cầu kinh nghiệm.</td>
+      <td>Trung tâm đào tạo lái xe VOV</td>
+      <td>0 bình luận</td>
+    </tr>
+  
+    <tr>
+      <td>📣 [FPTSHOP QUẾ VÕ ] FPT SHOP TUYỂN DỤNG TƯ VẤN BÁN HÀNG ĐA NHIỆM🔥... Thu nhập 10–15triệu/tháng... Có niềm đam mê về công nghệ</td>
+      <td>Mong muốn làm việc trong môi trường công nghệ chuyên nghiệp, có thu nhập ổn định và phúc lợi tốt.</td>
+      <td>Cần tìm công việc tư vấn bán hàng, hỗ trợ khách hàng và phát triển kỹ năng bán hàng.</td>
+      <td>FPT Shop Quế Võ</td>
+      <td>0 bình luận</td>
+    </tr>
+  
+    <tr>
+      <td>Spx hỗ trợ 11k/đơn đi toàn quốc, miễn hoàn shop cần lh 0869790596 em hỗ trợ ạ</td>
+      <td>Mong muốn tối ưu chi phí vận chuyển cho cửa hàng kinh doanh online của mình.</td>
+      <td>Cần tìm đơn vị vận chuyển giá rẻ, hỗ trợ toàn quốc và có chính sách miễn phí hoàn hàng.</td>
+      <td>Dịch vụ vận chuyển SPX</td>
+      <td>0 bình luận</td>
+    </tr>
+  
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer class="footer">
+    Generated from Apify run · Group "303498828705021" · WNDI Market Analysis
+  </footer>
+</div>
+
+<script>
+const topicLabels = ["Tuyển dụng - Nhân sự","Dịch vụ vận chuyển / Logistics","Tìm việc làm"];
+const topicValues = [4,1,1];
+const typeLabels = ["Bài đăng tuyển dụng","Bài đăng quảng cáo dịch vụ","Bài đăng tìm việc"];
+const typeValues = [4,1,1];
+
+const palette = ['#e11d48','#db2777','#a855f7','#7c3aed','#2563eb','#0891b2','#059669','#d97706','#64748b'];
+
+new Chart(document.getElementById('chartTopics'), {
+  type: 'doughnut',
+  data: {
+    labels: topicLabels,
+    datasets: [{ data: topicValues, backgroundColor: palette, borderWidth: 0 }]
+  },
+  options: {
+    plugins: { legend: { position: 'right', labels: { boxWidth: 12, font: { size: 11 } } } },
+    maintainAspectRatio: false
+  }
+});
+
+new Chart(document.getElementById('chartTypes'), {
+  type: 'bar',
+  data: {
+    labels: typeLabels,
+    datasets: [{
+      data: typeValues,
+      backgroundColor: '#f472b6',
+      borderRadius: 8,
+      label: 'Số bài'
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { color: '#fce7f3' }, ticks: { precision: 0 } },
+      y: { grid: { display: false } }
+    },
+    maintainAspectRatio: false
+  }
+});
+</script>
+</body>
+</html>

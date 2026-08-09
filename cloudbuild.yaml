@@ -1,0 +1,37 @@
+steps:
+  # 1. Build Docker image từ Dockerfile của backend (apps/be)
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/github.com/hoangviethung071195/annallystic-insight:$COMMIT_SHA'
+      - '-f'
+      - 'apps/be/Dockerfile'
+      - '.'
+
+  # 2. Push Docker image lên Artifact Registry / Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - 'gcr.io/$PROJECT_ID/github.com/hoangviethung071195/annallystic-insight:$COMMIT_SHA'
+
+  # 3. Deploy revision mới lên Cloud Run (annallystic-insight)
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'annallystic-insight'
+      - '--image'
+      - 'gcr.io/$PROJECT_ID/github.com/hoangviethung071195/annallystic-insight:$COMMIT_SHA'
+      - '--region'
+      - 'asia-southeast1'
+      - '--platform'
+      - 'managed'
+      - '--allow-unauthenticated'
+
+images:
+  - 'gcr.io/$PROJECT_ID/github.com/hoangviethung071195/annallystic-insight:$COMMIT_SHA'
+
+options:
+  logging: CLOUD_LOGGING_ONLY

@@ -1,0 +1,72 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  groups    Group[]
+
+  @@map("users")
+}
+
+model Group {
+  id              Int              @id @default(autoincrement())
+  userId          Int
+  user            User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name            String?
+  url             String
+  last_crawled_at String?
+  posts           Post[]
+  analysisResults AnalysisResult[]
+
+  @@unique([userId, url])
+  @@map("groups")
+}
+
+model Post {
+  id                 Int       @id @default(autoincrement())
+  group_id           Int
+  group              Group     @relation(fields: [group_id], references: [id], onDelete: Cascade)
+  fb_post_id         String?
+  author_name        String?
+  content            String?
+  comment_inner_text String?
+  post_text          String?
+  post_url           String?
+  crawled_at         String
+  comments           Comment[]
+
+  @@map("posts")
+}
+
+model Comment {
+  id            Int     @id @default(autoincrement())
+  post_id       Int
+  post          Post    @relation(fields: [post_id], references: [id], onDelete: Cascade)
+  fb_comment_id String  @unique
+  author_name   String?
+  comment_text  String?
+  created_at    String?
+
+  @@map("comments")
+}
+
+model AnalysisResult {
+  id            Int     @id @default(autoincrement())
+  group_id      Int
+  group         Group   @relation(fields: [group_id], references: [id], onDelete: Cascade)
+  analysis_text String?
+  created_at    String?
+
+  @@map("analysis_results")
+}
+

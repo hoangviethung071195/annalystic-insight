@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Báo cáo Want–Need–Demand–Insight | Tâm Sự Mẹ Bầu</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&family=Fraunces:opsz,wght@9..144,500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fff7f9;
+  --bg2: #ffffff;
+  --ink: #1f1220;
+  --muted: #6b5b66;
+  --line: #f0d7e0;
+  --rose: #e11d48;
+  --pink: #db2777;
+  --violet: #7c3aed;
+  --blue: #2563eb;
+  --green: #059669;
+  --amber: #d97706;
+  --shadow: 0 10px 40px rgba(225,29,72,.08);
+  --radius: 18px;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "Be Vietnam Pro", system-ui, sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(1200px 600px at 10% -10%, #ffe4ec 0%, transparent 60%),
+    radial-gradient(900px 500px at 100% 0%, #ede9fe 0%, transparent 50%),
+    var(--bg);
+  line-height: 1.55;
+}
+.wrap { max-width: 1180px; margin: 0 auto; padding: 28px 20px 80px; }
+.hero {
+  background: linear-gradient(135deg, #881337 0%, #be123c 40%, #db2777 75%, #a78bfa 100%);
+  color: #fff;
+  border-radius: 28px;
+  padding: 36px 36px 32px;
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+.hero::after {
+  content: "";
+  position: absolute; right: -40px; top: -40px;
+  width: 220px; height: 220px; border-radius: 50%;
+  background: rgba(255,255,255,.12);
+}
+.hero .eyebrow {
+  display: inline-flex; gap: 8px; align-items: center;
+  background: rgba(255,255,255,.15);
+  border: 1px solid rgba(255,255,255,.25);
+  padding: 6px 12px; border-radius: 999px;
+  font-size: 12px; letter-spacing: .04em; text-transform: uppercase;
+}
+.hero h1 {
+  font-family: Fraunces, Georgia, serif;
+  font-size: clamp(1.7rem, 3.5vw, 2.5rem);
+  margin: 14px 0 8px; line-height: 1.2; max-width: 18ch;
+}
+.hero p.lead { max-width: 62ch; opacity: .92; margin: 0 0 18px; font-weight: 300; }
+.hero-meta { display: flex; flex-wrap: wrap; gap: 10px 18px; font-size: 13px; opacity: .9; }
+.hero a { color: #fff; }
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+  margin-top: -28px;
+  position: relative;
+  z-index: 2;
+  padding: 0 12px;
+}
+.kpi {
+  background: var(--bg2);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 16px 14px;
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+.kpi .n {
+  font-family: Fraunces, Georgia, serif;
+  font-size: 1.65rem; font-weight: 700; color: var(--rose);
+}
+.kpi .l { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; margin-top: 4px; }
+section {
+  margin-top: 36px;
+}
+.section-head {
+  display: flex; align-items: end; justify-content: space-between;
+  gap: 12px; margin-bottom: 14px;
+}
+.section-head h2 {
+  font-family: Fraunces, Georgia, serif;
+  font-size: 1.45rem; margin: 0;
+}
+.section-head p { margin: 0; color: var(--muted); font-size: 14px; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.card {
+  background: var(--bg2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+.card h3 { margin: 0 0 12px; font-size: 1rem; }
+.card.accent-want { border-top: 4px solid var(--pink); }
+.card.accent-need { border-top: 4px solid var(--blue); }
+.card.accent-demand { border-top: 4px solid var(--green); }
+.muted { color: var(--muted); font-size: 13px; }
+.bar-row { display: grid; grid-template-columns: 1fr 1.4fr 36px; gap: 8px; align-items: center; margin-bottom: 8px; }
+.bar-label { font-size: 12.5px; color: var(--ink); line-height: 1.3; }
+.bar-track { height: 8px; background: #fce7f3; border-radius: 99px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 99px; }
+.bar-val { font-size: 12px; font-weight: 600; text-align: right; color: var(--muted); }
+.pillars {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px;
+}
+.pillar {
+  border-radius: 16px; padding: 16px; color: #fff; min-height: 120px;
+}
+.pillar b { display: block; font-size: 12px; opacity: .85; letter-spacing: .06em; text-transform: uppercase; }
+.pillar span { display: block; margin-top: 8px; font-family: Fraunces, Georgia, serif; font-size: 1.05rem; line-height: 1.35; }
+.p-want { background: linear-gradient(145deg,#be123c,#db2777); }
+.p-need { background: linear-gradient(145deg,#1d4ed8,#2563eb); }
+.p-demand { background: linear-gradient(145deg,#047857,#059669); }
+.p-insight { background: linear-gradient(145deg,#6d28d9,#7c3aed); }
+.insight-card {
+  display: grid; grid-template-columns: 48px 1fr; gap: 14px;
+  background: var(--bg2); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 18px; margin-bottom: 10px;
+  box-shadow: var(--shadow);
+}
+.insight-num {
+  width: 48px; height: 48px; border-radius: 14px;
+  background: #fdf2f8; color: var(--rose);
+  display: flex; align-items: center; justify-content: center;
+  font-family: Fraunces, Georgia, serif; font-weight: 700; font-size: 1.1rem;
+}
+.insight-card h3 { margin: 0 0 6px; font-size: 1rem; }
+.insight-card p { margin: 0; color: var(--muted); font-size: 14px; }
+.posts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.post-card {
+  display: block; text-decoration: none; color: inherit;
+  background: var(--bg2); border: 1px solid var(--line);
+  border-radius: 16px; padding: 14px 16px;
+  transition: transform .15s, box-shadow .15s;
+}
+.post-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); border-color: #f9a8d4; }
+.post-meta { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+.post-text { margin: 0 0 10px; font-size: 13.5px; }
+.post-stats { display: flex; gap: 12px; font-size: 12px; color: var(--muted); }
+.post-stats .eng { margin-left: auto; color: var(--rose); font-weight: 600; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+.chip {
+  font-size: 11px; background: #fdf2f8; color: #9d174d;
+  border-radius: 999px; padding: 3px 8px;
+}
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 11px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+.rec {
+  display: grid; grid-template-columns: 90px 1fr; gap: 12px; align-items: start;
+  padding: 12px 0; border-bottom: 1px solid var(--line);
+}
+.rec:last-child { border-bottom: 0; }
+.rec-tag {
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  background: #ede9fe; color: #5b21b6; border-radius: 8px;
+  padding: 6px 8px; text-align: center;
+}
+.rec p { margin: 0; font-size: 14px; }
+.chart-box { position: relative; height: 280px; }
+.chart-box.sm { height: 240px; }
+.footer {
+  margin-top: 40px; text-align: center; color: var(--muted); font-size: 12px;
+}
+.legend-def {
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-top: 12px;
+}
+.legend-def div {
+  background: #fff; border: 1px dashed var(--line); border-radius: 12px; padding: 12px; font-size: 12.5px;
+}
+.legend-def strong { display: block; margin-bottom: 4px; }
+@media (max-width: 960px) {
+  .kpis { grid-template-columns: repeat(3, 1fr); }
+  .grid-2, .grid-3, .posts, .pillars, .legend-def { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .kpis { grid-template-columns: repeat(2, 1fr); }
+  .hero { padding: 24px; }
+  .bar-row { grid-template-columns: 1fr; }
+  .bar-val { text-align: left; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="eyebrow">Apify · Facebook Groups Scraper · W–N–D–I Report</div>
+    <h1>Tâm Sự Mẹ Bầu — Want · Need · Demand · Insight</h1>
+    <p class="lead">
+      Phân tích <strong>97 bài post mới nhất</strong> từ nhóm
+      <a href="https://www.facebook.com/groups/354802416845044" target="_blank" rel="noopener">facebook.com/groups/354802416845044</a>
+      (sắp xếp theo bài mới · Chronological). Báo cáo tổng hợp mong muốn, nhu cầu, nhu cầu thị trường và insight hành vi cộng đồng mẹ bầu/mẹ bỉm.
+    </p>
+    <div class="hero-meta">
+      <span>📁 Nhóm: Tâm Sự Mẹ Bầu</span>
+      <span>🗓️ Tạo báo cáo: 17/07/2026 17:21</span>
+      <span>🤖 Nguồn: Apify facebook-groups-scraper</span>
+      <span>📊 Dataset: 100 posts</span>
+    </div>
+  </header>
+
+  <div class="kpis">
+    <div class="kpi"><div class="n">97</div><div class="l">Bài có nội dung</div></div>
+    <div class="kpi"><div class="n">1767</div><div class="l">Tổng likes</div></div>
+    <div class="kpi"><div class="n">1319</div><div class="l">Tổng comments</div></div>
+    <div class="kpi"><div class="n">44</div><div class="l">Câu hỏi / xin advice</div></div>
+    <div class="kpi"><div class="n">48</div><div class="l">Bài ẩn danh</div></div>
+    <div class="kpi"><div class="n">42.3%</div><div class="l">Có yếu tố “vía”</div></div>
+  </div>
+
+  <section>
+    <div class="section-head">
+      <h2>Khung phân tích W–N–D–I</h2>
+      <p>Định nghĩa vận hành cho báo cáo này</p>
+    </div>
+    <div class="pillars">
+      <div class="pillar p-want"><b>Want</b><span>Mong muốn cảm xúc: vía, sinh thường, bé ngủ ngoan, về dáng…</span></div>
+      <div class="pillar p-need"><b>Need</b><span>Nhu cầu giải quyết vấn đề: kích sữa, biếng ăn, thai nhỏ, ốm khi bầu…</span></div>
+      <div class="pillar p-demand"><b>Demand</b><span>Nhu cầu thị trường / sản phẩm được nhắc: ngũ cốc, siro, D3K2, SCT…</span></div>
+      <div class="pillar p-insight"><b>Insight</b><span>Đúc kết hành vi & cơ hội: peer proof, ẩn danh, mâu thuẫn sữa–dáng…</span></div>
+    </div>
+    <div class="legend-def">
+      <div><strong>Want ≠ Need</strong>Want là “tôi muốn cảm thấy…”. Need là “tôi đang thiếu giải pháp cho…”.</div>
+      <div><strong>Demand</strong>Là Need đã gắn với category/sản phẩm cụ thể xuất hiện trong hội thoại.</div>
+      <div><strong>Engagement score</strong>likes + 2×comments + 3×shares — ưu tiên bài có thảo luận.</div>
+      <div><strong>Lưu ý</strong>Nhóm có soft-sell / nhả vía sản phẩm; insight có tách tín hiệu thật vs narrative marketing.</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Bức tranh chủ đề & loại bài</h2>
+      <p>1 bài có thể thuộc nhiều chủ đề</p>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <h3>Phân bố chủ đề</h3>
+        <div class="chart-box"><canvas id="chartTopics"></canvas></div>
+      </div>
+      <div class="card">
+        <h3>Loại nội dung</h3>
+        <div class="chart-box"><canvas id="chartTypes"></canvas></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Want · Need · Demand</h2>
+      <p>Đếm theo số bài chạm tín hiệu (rule-based NLP tiếng Việt)</p>
+    </div>
+    <div class="grid-3">
+      <div class="card accent-want">
+        <h3>💖 Top Wants</h3>
+        
+        <div class="bar-row">
+          <div class="bar-label">Xin vía may mắn (con khỏe, thai kỳ suôn sẻ)</div>
+          <div class="bar-track"><div class="bar-fill" style="width:100.0%;background:#db2777"></div></div>
+          <div class="bar-val">29</div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-label">Muốn bé tăng cân đạt chuẩn / bụ bẫm</div>
+          <div class="bar-track"><div class="bar-fill" style="width:51.7%;background:#db2777"></div></div>
+          <div class="bar-val">15</div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-label">Muốn bé ngủ ngoan, sâu giấc, mẹ được nghỉ</div>
+          <div class="bar-track"><div class="bar-fill" style="width:48.3%;background:#db2777"></div></div>
+          <div class="bar-val">14</div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-label">Muốn dinh dưỡng vào con, mẹ không tăng cân nhiều</div>
+          <div class="bar-track"><div class="bar-fill" style="width:37.9%;background:#db2777"></div></div>
+          <div class="bar-val">11</div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-label">Muốn sữa về nhiều, đặc để nuôi con</div>
+          <div class="bar-track"><div class="bar-fill" style="width:34.5%;background:#db2777"></div></div>
+          <div class="bar-val">10</div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-label">Muốn về dáng sau sinh</div>
+          <div class="bar-track"><div class="bar-fill" style="width:17.2%;background:#db2777"></div></div>
+          <div class="bar-val">5</div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-label">Muốn hết/đỡ nghén để ăn uống được</div>
+          <div class="bar-track"><div class="bar-fill" style="width:17.2%;background:#db2777"></div></div>
+          <div class="bar-val">5</div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-label">Mong sinh thường, mẹ tròn con vuông</div>
+          <div class="bar-track"><div class="bar-fill" style="width:10.3%;background:#db2777"></div></div>
+          <div class="bar-val">3</div>
+        </div>
+      </div>
+      <div class="card accent-need">
+        <h3>🛠️ Top Needs</h3>
+        
+        <div class="bar-row">
+          <div class="bar-label">Cần cải thiện giấc ngủ bé</div>
+          <div class="bar-track"><div class="bar-fill" style="width:100.0%;background:#2563eb"></div></div>
+          <div class="bar-val">21</div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-label">Cần mốc siêu âm / theo dõi thai kỳ</div>
+          <div class="bar-track"><div class="bar-fill" style="width:61.9%;background:#2563eb"></div></div>
+          <div class="bar-val">13</div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-label">Cần hỗ trợ bé biếng ăn / chậm tăng cân</div>
+          <div class="bar-track"><div class="bar-fill" style="width:57.1%;background:#2563eb"></div></div>
+          <div class="bar-val">12</div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-label">Cần xử lý nôn trớ / tiêu hóa bé</div>
+          <div class="bar-track"><div class="bar-fill" style="width:57.1%;background:#2563eb"></div></div>
+          <div class="bar-val">12</div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-label">Cần giải pháp kích sữa / duy trì sữa mẹ</div>
+          <div class="bar-track"><div class="bar-fill" style="width:42.9%;background:#2563eb"></div></div>
+          <div class="bar-val">9</div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-label">Cần chế độ ăn dễ hấp thu khi nghén</div>
+          <div class="bar-track"><div class="bar-fill" style="width:42.9%;background:#2563eb"></div></div>
+          <div class="bar-val">9</div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-label">Cần bồi bổ khi thai nhỏ hơn chuẩn</div>
+          <div class="bar-track"><div class="bar-fill" style="width:23.8%;background:#2563eb"></div></div>
+          <div class="bar-val">5</div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-label">Cần thông tin / chuẩn bị sinh mổ</div>
+          <div class="bar-track"><div class="bar-fill" style="width:14.3%;background:#2563eb"></div></div>
+          <div class="bar-val">3</div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-label">Cần cách xử lý ốm nhẹ khi mang thai an toàn</div>
+          <div class="bar-track"><div class="bar-fill" style="width:14.3%;background:#2563eb"></div></div>
+          <div class="bar-val">3</div>
+        </div>
+      </div>
+      <div class="card accent-demand">
+        <h3>🛒 Top Demands</h3>
+        
+        <div class="bar-row">
+          <div class="bar-label">Siro ăn ngon / hỗ trợ biếng ăn</div>
+          <div class="bar-track"><div class="bar-fill" style="width:100.0%;background:#059669"></div></div>
+          <div class="bar-val">14</div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-label">Ngũ cốc bầu (pha sữa tươi không đường)</div>
+          <div class="bar-track"><div class="bar-fill" style="width:92.9%;background:#059669"></div></div>
+          <div class="bar-val">13</div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-label">Sữa công thức / kết hợp ti mẹ</div>
+          <div class="bar-track"><div class="bar-fill" style="width:85.7%;background:#059669"></div></div>
+          <div class="bar-val">12</div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-label">Sữa tươi không đường</div>
+          <div class="bar-track"><div class="bar-fill" style="width:57.1%;background:#059669"></div></div>
+          <div class="bar-val">8</div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-label">Thực phẩm / TPBVSK lợi sữa</div>
+          <div class="bar-track"><div class="bar-fill" style="width:35.7%;background:#059669"></div></div>
+          <div class="bar-val">5</div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-label">Trứng vịt lộn (bồi bổ)</div>
+          <div class="bar-track"><div class="bar-fill" style="width:28.6%;background:#059669"></div></div>
+          <div class="bar-val">4</div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-label">Nhu cầu mua sắm / săn deal mẹ &amp; bé</div>
+          <div class="bar-track"><div class="bar-fill" style="width:21.4%;background:#059669"></div></div>
+          <div class="bar-val">3</div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-label">Sữa chua / phô mai</div>
+          <div class="bar-track"><div class="bar-fill" style="width:21.4%;background:#059669"></div></div>
+          <div class="bar-val">3</div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-label">Bổ sung D3K2</div>
+          <div class="bar-track"><div class="bar-fill" style="width:21.4%;background:#059669"></div></div>
+          <div class="bar-val">3</div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-label">Hỏi về thuốc giảm cân (nhu cầu nhạy cảm)</div>
+          <div class="bar-track"><div class="bar-fill" style="width:7.1%;background:#059669"></div></div>
+          <div class="bar-val">1</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Hành trình mẹ (Journey heat)</h2>
+      <p>Volume hội thoại theo giai đoạn cuộc đời mẹ–bé</p>
+    </div>
+    <div class="card">
+      <div class="chart-box sm"><canvas id="chartJourney"></canvas></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Insights chiến lược</h2>
+      <p>8 phát hiện chính từ 100 bài gần nhất</p>
+    </div>
+    <div class="insight-card">
+      <div class="insight-num">01</div>
+      <div><h3>Cộng đồng vận hành bằng &#x27;vía&#x27; + peer proof</h3><p>Khoảng 42.3% bài có yếu tố xin/nhả vía. Đây vừa là nghi thức tâm linh, vừa là cơ chế social proof: mẹ chia sẻ cân nặng – giấc ngủ – chế độ ăn để xác nhận &#x27;mình làm đúng&#x27;. Insight: nội dung có &#x27;trước/sau + số kg + thói quen&#x27; sẽ lan tỏa mạnh hơn bài quảng cáo thuần.</p></div>
+    </div>
+<div class="insight-card">
+      <div class="insight-num">02</div>
+      <div><h3>Nỗi lo lõi: cân bé &amp; sữa mẹ</h3><p>Hai cụm chủ đề lớn nhất xoay quanh cân nặng bé (56.7% bài liên quan) và sữa/kích sữa. Mẹ lo &#x27;bé có đạt chuẩn không&#x27; và &#x27;mình có đủ sữa không&#x27; — đây là pain điểm identity (người mẹ tốt), không chỉ thông tin y khoa.</p></div>
+    </div>
+<div class="insight-card">
+      <div class="insight-num">03</div>
+      <div><h3>Ngũ cốc + siro là narrative sản phẩm thống trị</h3><p>Nhiều bài success story lồng ghép ngũ cốc bầu / siro ăn ngon / D3K2 như &#x27;công thức&#x27; thành công. Soft-sell hoặc nhắc sản phẩm xuất hiện đáng kể (~33.0% bài có tín hiệu). Demand thực tế: giải pháp &#x27;dễ dùng hàng ngày&#x27; hơn là kiến thức dài.</p></div>
+    </div>
+<div class="insight-card">
+      <div class="insight-num">04</div>
+      <div><h3>Hai cực thai kỳ: sợ thai nhỏ vs sợ thai to (ăn dao)</h3><p>Cùng lúc có mẹ cầu &#x27;chim non to&#x27; và mẹ bị bác sĩ bảo hãm ăn vì sợ mổ. Nhu cầu nội dung: hướng dẫn dinh dưỡng theo tuần thai + ngưỡng cân chuẩn, giảm lo âu lưỡng cực.</p></div>
+    </div>
+<div class="insight-card">
+      <div class="insight-num">05</div>
+      <div><h3>Sau sinh: về dáng song song với nuôi con</h3><p>~10.3% bài chạm về dáng/cân mẹ. Mẹ vừa muốn sữa nhiều vừa muốn gọn dáng — mâu thuẫn tạo demand cho giải pháp &#x27;vừa lợi sữa vừa kiểm soát cân&#x27; và cộng đồng accountability.</p></div>
+    </div>
+<div class="insight-card">
+      <div class="insight-num">06</div>
+      <div><h3>Câu hỏi ngắn, engagement cao = intent mua/xin tư vấn</h3><p>Có 44 bài mang tính hỏi/xin lời khuyên. Các câu hỏi ngắn về kích sữa, cân bé, mổ/về dáng thường kéo comments cao — đây là kho soft-intent để brand/me-and-baby content vào đúng pain.</p></div>
+    </div>
+<div class="insight-card">
+      <div class="insight-num">07</div>
+      <div><h3>Ẩn danh vẫn cao — chủ đề nhạy cảm</h3><p>48/97 bài từ người ẩn danh. Mẹ thoải mái hơn khi hỏi chuyện cơ thể, sữa, cân nặng khi không lộ danh tính. Insight UX: kênh tư vấn ẩn danh / chatbot sẽ giảm rào cản.</p></div>
+    </div>
+<div class="insight-card">
+      <div class="insight-num">08</div>
+      <div><h3>Khung giờ hoạt động</h3><p>Cao điểm đăng bài khoảng 14h–18h (giờ VN), đặc biệt ~15h; buổi sáng 10h–11h cũng sôi. Content/community reply nên ưu tiên khung chiều để bắt tương tác.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Thời gian hoạt động</h2>
+      <p>Khi nào mẹ đăng bài nhiều nhất</p>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <h3>Theo ngày</h3>
+        <div class="chart-box sm"><canvas id="chartDays"></canvas></div>
+      </div>
+      <div class="card">
+        <h3>Theo giờ (Asia/Ho_Chi_Minh, UTC+7)</h3>
+        <div class="chart-box sm"><canvas id="chartHours"></canvas></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Câu hỏi nổi bật (intent cao)</h2>
+      <p>Top câu hỏi / xin advice theo engagement</p>
+    </div>
+    <div class="posts">
+    <a class="post-card" href="https://www.facebook.com/groups/354802416845044/permalink/1351638990494710/" target="_blank" rel="noopener">
+      <div class="post-meta">
+        <strong>Mẹ Của Thóc</strong>
+        <span>16/07 11:22</span>
+      </div>
+      <p class="post-text">Mẹ con em đã vượt cạn thành công rồi ạ.  Nhả vía sinh nhanh cho các mẹ nè . Trai  yêu 3,5 kg ăn no ngủ kĩ 😍  Đau bụng 30 phút rặn 3 hơi là tòi ra cục vàng này đây , mách các mẹ 38 tuần mỗi ngày ăn 1 quả dứa là  dễ đẻ đấy…</p>
+      <div class="chips"><span class="chip">Cân nặng bé / tăng cân</span><span class="chip">Thai kỳ / nghén / siêu âm</span><span class="chip">Sinh nở (thường / mổ)</span></div>
+      <div class="post-stats">
+        <span>❤️ 77</span>
+        <span>💬 23</span>
+        <span>🔁 0</span>
+        <span class="eng">Eng 123</span>
+      </div>
+    </a>
+
+    <a class="post-card" href="https://www.facebook.com/groups/354802416845044/permalink/1351306607194615/" target="_blank" rel="noopener">
+      <div class="post-meta">
+        <strong>Hoa Hồng</strong>
+        <span>16/07 13:40</span>
+      </div>
+      <p class="post-text">Như thế này là đậu rồi phải không các Mom ơi 😳</p>
+      <div class="chips"><span class="chip">Khác</span></div>
+      <div class="post-stats">
+        <span>❤️ 81</span>
+        <span>💬 13</span>
+        <span>🔁 2</span>
+        <span class="eng">Eng 113</span>
+      </div>
+    </a>
+
+    <a class="post-card" href="https://www.facebook.com/groups/354802416845044/permalink/1351679187157357/" target="_blank" rel="noopener">
+      <div class="post-meta">
+        <strong>Ẩn danh</strong>
+        <span>16/07 12:22</span>
+      </div>
+      <p class="post-text">37 tuần thai được 2kg1 ổn không các mom</p>
+      <div class="chips"><span class="chip">Cân nặng bé / tăng cân</span><span class="chip">Thai kỳ / nghén / siêu âm</span></div>
+      <div class="post-stats">
+        <span>❤️ 31</span>
+        <span>💬 30</span>
+        <span>🔁 0</span>
+        <span class="eng">Eng 91</span>
+      </div>
+    </a>
+
+    <a class="post-card" href="https://www.facebook.com/groups/354802416845044/permalink/1351444353847507/" target="_blank" rel="noopener">
+      <div class="post-meta">
+        <strong>Ẩn danh</strong>
+        <span>16/07 10:45</span>
+      </div>
+      <p class="post-text">Em bầu 11w cảm giác như không có bầu luôn mọi ngừoi ạ ngực cũng hết đau có ai giống em không ạ</p>
+      <div class="chips"><span class="chip">Thai kỳ / nghén / siêu âm</span><span class="chip">Sức khỏe mẹ bầu</span></div>
+      <div class="post-stats">
+        <span>❤️ 22</span>
+        <span>💬 27</span>
+        <span>🔁 0</span>
+        <span class="eng">Eng 76</span>
+      </div>
+    </a>
+
+    <a class="post-card" href="https://www.facebook.com/groups/354802416845044/permalink/1351626423829300/" target="_blank" rel="noopener">
+      <div class="post-meta">
+        <strong>Thu Lê</strong>
+        <span>16/07 11:04</span>
+      </div>
+      <p class="post-text">Siêu âm thấy con vui ghê các M ạ -nhã vía bé ạ Trộm vía bé 34w được 3,2 ký rồi ạ!  Mình sợ ăn dao lần 2 quá  tập 1 mổ nhưng thấy chịu đau được , nghe mọi người bảo mổ lần 2 đau hơn phải không các Mom ,M nào mổ lần 2 cho …</p>
+      <div class="chips"><span class="chip">Thai kỳ / nghén / siêu âm</span><span class="chip">Sinh nở (thường / mổ)</span><span class="chip">Xin vía / cộng đồng</span></div>
+      <div class="post-stats">
+        <span>❤️ 45</span>
+        <span>💬 11</span>
+        <span>🔁 0</span>
+        <span class="eng">Eng 67</span>
+      </div>
+    </a>
+
+    <a class="post-card" href="https://www.facebook.com/groups/354802416845044/permalink/1351363180522291/" target="_blank" rel="noopener">
+      <div class="post-meta">
+        <strong>Ẩn danh</strong>
+        <span>16/07 03:28</span>
+      </div>
+      <p class="post-text">Mẹ con tớ vượt cạn thành công rùi ạ.bé 40w 4,8kg.nhả vía các mẹ tiện cho em xin luôn cách nhiều sữa với ạ</p>
+      <div class="chips"><span class="chip">Sữa mẹ / kích sữa</span><span class="chip">Cân nặng bé / tăng cân</span><span class="chip">Thai kỳ / nghén / siêu âm</span></div>
+      <div class="post-stats">
+        <span>❤️ 27</span>
+        <span>💬 16</span>
+        <span>🔁 0</span>
+        <span class="eng">Eng 59</span>
+      </div>
+    </a>
+
+    <a class="post-card" href="https://www.facebook.com/groups/354802416845044/permalink/1352134317111844/" target="_blank" rel="noopener">
+      <div class="post-meta">
+        <strong>Ẩn danh</strong>
+        <span>17/07 01:18</span>
+      </div>
+      <p class="post-text">Khoe cân nặng con đi các mom 🤣 Nb : 3kg   6m : 5kg</p>
+      <div class="chips"><span class="chip">Cân nặng bé / tăng cân</span></div>
+      <div class="post-stats">
+        <span>❤️ 14</span>
+        <span>💬 18</span>
+        <span>🔁 1</span>
+        <span class="eng">Eng 53</span>
+      </div>
+    </a>
+
+    <a class="post-card" href="https://www.facebook.com/groups/354802416845044/permalink/1352370100421599/" target="_blank" rel="noopener">
+      <div class="post-meta">
+        <strong>Ẩn danh</strong>
+        <span>17/07 08:31</span>
+      </div>
+      <p class="post-text">Mẹ con e về đích thành công rồi ạ ❤️ 39w5d em bé 3kg7 ạ ❤️ nhả vía các mom tiện cho em xin vía sữa nhiều sữa đặc ạ🥰</p>
+      <div class="chips"><span class="chip">Sữa mẹ / kích sữa</span><span class="chip">Cân nặng bé / tăng cân</span><span class="chip">Sinh nở (thường / mổ)</span></div>
+      <div class="post-stats">
+        <span>❤️ 15</span>
+        <span>💬 17</span>
+        <span>🔁 0</span>
+        <span class="eng">Eng 49</span>
+      </div>
+    </a>
+
+    <a class="post-card" href="https://www.facebook.com/groups/354802416845044/permalink/1351334303858512/" target="_blank" rel="noopener">
+      <div class="post-meta">
+        <strong>Ẩn danh</strong>
+        <span>16/07 02:37</span>
+      </div>
+      <p class="post-text">Các mom ơi, bé nhà các mom 4 tháng rưỡi đc bao nhiêu kg ạ? Bé gái nhà e mới đc 5,7kg, nb 2,6kg. Nản quá ạ. Huhu</p>
+      <div class="chips"><span class="chip">Cân nặng bé / tăng cân</span></div>
+      <div class="post-stats">
+        <span>❤️ 12</span>
+        <span>💬 18</span>
+        <span>🔁 0</span>
+        <span class="eng">Eng 48</span>
+      </div>
+    </a>
+
+    <a class="post-card" href="https://www.facebook.com/groups/354802416845044/permalink/1352325957092680/" target="_blank" rel="noopener">
+      <div class="post-meta">
+        <strong>Ẩn danh</strong>
+        <span>17/07 07:08</span>
+      </div>
+      <p class="post-text">Mới đẻ 3kg1 đầy tháng 3kg7 các mom có ổn ko các mon🥲</p>
+      <div class="chips"><span class="chip">Cân nặng bé / tăng cân</span></div>
+      <div class="post-stats">
+        <span>❤️ 11</span>
+        <span>💬 18</span>
+        <span>🔁 0</span>
+        <span class="eng">Eng 47</span>
+      </div>
+    </a>
+
+    <a class="post-card" href="https://www.facebook.com/groups/354802416845044/permalink/1351654317159844/" target="_blank" rel="noopener">
+      <div class="post-meta">
+        <strong>Ẩn danh</strong>
+        <span>16/07 11:46</span>
+      </div>
+      <p class="post-text">Ngày e Uống 4 lít nước rồi sao vẫn k có sữa hả các mom😭😭</p>
+      <div class="chips"><span class="chip">Khác</span></div>
+      <div class="post-stats">
+        <span>❤️ 12</span>
+        <span>💬 17</span>
+        <span>🔁 0</span>
+        <span class="eng">Eng 46</span>
+      </div>
+    </a>
+
+    <a class="post-card" href="https://www.facebook.com/groups/354802416845044/permalink/1351416027183673/" target="_blank" rel="noopener">
+      <div class="post-meta">
+        <strong>Ẩn danh</strong>
+        <span>16/07 04:54</span>
+      </div>
+      <p class="post-text">Bé nhà mình 6m chưa lên nổi 6kg bé các bà bao nhiêu cân rồi🥲</p>
+      <div class="chips"><span class="chip">Cân nặng bé / tăng cân</span></div>
+      <div class="post-stats">
+        <span>❤️ 12</span>
+        <span>💬 17</span>
+        <span>🔁 0</span>
+        <span class="eng">Eng 46</span>
+      </div>
+    </a></div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Bài engagement cao nhất</h2>
+      <p>Social proof & nội dung “win” trên feed nhóm</p>
+    </div>
+    <div class="posts">
+    <a class="post-card" href="https://www.facebook.com/groups/354802416845044/permalink/1351381600520449/" target="_blank" rel="noopener">
+      <div class="post-meta">
+        <strong>Ẩn danh</strong>
+        <span>16/07 11:06</span>
+      </div>
+      <p class="post-text">Mấy chj có bầu ckk mnh vô tâm quá thì saoo ạ</p>
+      <div class="chips"><span class="chip">Thai kỳ / nghén / siêu âm</span></div>
+      <div class="post-stats">
+        <span>❤️ 47</span>
+        <span>💬 51</span>
+        <span>🔁 0</span>
+        <span class="eng">Eng 149</span>
+      </div>
+    </a>
+
+    <a class="post-card" href="https://www.facebook.com/groups/354802416845044/permalink/1352210363770906/" target="_blank" rel="noopener">
+      <div class="post-meta">
+        <strong>Kim Hoàng</strong>
+        <span>17/07 03:36</span>
+      </div>
+      <p class="post-text">Em nhả vía mẹ tròn con vuông🥰 Bé sinh 40w2d nặng 3,9kg to nhất phòng ❤️Mẹ tăng 8kg ,Con  da trắng hồng môi đỏ iu lắm luôn 😘 Bầu mom nào ko uống đc sữa bầu cứ uống ngũ cốc như em, uống đến sinh luôn vào con nhiều lắm .Sin…</p>
+      <div class="chips"><span class="chip">Sữa mẹ / kích sữa</span><span class="chip">Cân nặng bé / tăng cân</span><span class="chip">Thai kỳ / nghén / siêu âm</span></div>
+      <div class="post-stats">
+        <span>❤️ 85</span>
+        <span>💬 31</span>
+        <span>🔁 0</span>
+        <span class="eng">Eng 147</span>
+      </div>
+    </a>
+
+    <a class="post-card" href="https://www.facebook.com/groups/354802416845044/permalink/1351336630524946/" target="_blank" rel="noopener">
+      <div class="post-meta">
+        <strong>Ẩn danh</strong>
+        <span>16/07 02:48</span>
+      </div>
+      <p class="post-text">30w mà 890gr giờ có bồi bổ kịp k mấy Chị , Bs bảo nhỏ quá huhu, e lại k uống được sữa bầu thì giờ ăn uống ntn được ạ</p>
+      <div class="chips"><span class="chip">Thai kỳ / nghén / siêu âm</span></div>
+      <div class="post-stats">
+        <span>❤️ 18</span>
+        <span>💬 57</span>
+        <span>🔁 0</span>
+        <span class="eng">Eng 132</span>
+      </div>
+    </a>
+
+    <a class="post-card" href="https://www.facebook.com/groups/354802416845044/permalink/1351451673846775/" target="_blank" rel="noopener">
+      <div class="post-meta">
+        <strong>AgileElk7704</strong>
+        <span>16/07 10:45</span>
+      </div>
+      <p class="post-text">Khi nào đi siêu âm được ạ mấy mom</p>
+      <div class="chips"><span class="chip">Thai kỳ / nghén / siêu âm</span></div>
+      <div class="post-stats">
+        <span>❤️ 64</span>
+        <span>💬 32</span>
+        <span>🔁 0</span>
+        <span class="eng">Eng 128</span>
+      </div>
+    </a>
+
+    <a class="post-card" href="https://www.facebook.com/groups/354802416845044/permalink/1351638990494710/" target="_blank" rel="noopener">
+      <div class="post-meta">
+        <strong>Mẹ Của Thóc</strong>
+        <span>16/07 11:22</span>
+      </div>
+      <p class="post-text">Mẹ con em đã vượt cạn thành công rồi ạ.  Nhả vía sinh nhanh cho các mẹ nè . Trai  yêu 3,5 kg ăn no ngủ kĩ 😍  Đau bụng 30 phút rặn 3 hơi là tòi ra cục vàng này đây , mách các mẹ 38 tuần mỗi ngày ăn 1 quả dứa là  dễ đẻ đấy…</p>
+      <div class="chips"><span class="chip">Cân nặng bé / tăng cân</span><span class="chip">Thai kỳ / nghén / siêu âm</span><span class="chip">Sinh nở (thường / mổ)</span></div>
+      <div class="post-stats">
+        <span>❤️ 77</span>
+        <span>💬 23</span>
+        <span>🔁 0</span>
+        <span class="eng">Eng 123</span>
+      </div>
+    </a>
+
+    <a class="post-card" href="https://www.facebook.com/groups/354802416845044/permalink/1351360737189202/" target="_blank" rel="noopener">
+      <div class="post-meta">
+        <strong>Ngân Ngây Thơ</strong>
+        <span>16/07 03:22</span>
+      </div>
+      <p class="post-text">Bạn ngựa đực nhà em đúng 40tuần mới chịu ra gặp mẹ 😆 Con nặng 4,1kg mẹ đẻ thường ạ, xin vía suốt thai kì . Nhập viện 1 tiếng là gặp con rồi , k nghĩ là nhanh như vậy Lúc bầu 5tháng đi siêu âm  bsi bảo thai nhỏ mà k ngờ đ…</p>
+      <div class="chips"><span class="chip">Cân nặng bé / tăng cân</span><span class="chip">Thai kỳ / nghén / siêu âm</span><span class="chip">Xin vía / cộng đồng</span></div>
+      <div class="post-stats">
+        <span>❤️ 82</span>
+        <span>💬 19</span>
+        <span>🔁 0</span>
+        <span class="eng">Eng 120</span>
+      </div>
+    </a>
+
+    <a class="post-card" href="https://www.facebook.com/groups/354802416845044/permalink/1351306607194615/" target="_blank" rel="noopener">
+      <div class="post-meta">
+        <strong>Hoa Hồng</strong>
+        <span>16/07 13:40</span>
+      </div>
+      <p class="post-text">Như thế này là đậu rồi phải không các Mom ơi 😳</p>
+      <div class="chips"><span class="chip">Khác</span></div>
+      <div class="post-stats">
+        <span>❤️ 81</span>
+        <span>💬 13</span>
+        <span>🔁 2</span>
+        <span class="eng">Eng 113</span>
+      </div>
+    </a>
+
+    <a class="post-card" href="https://www.facebook.com/groups/354802416845044/permalink/1351405253851417/" target="_blank" rel="noopener">
+      <div class="post-meta">
+        <strong>Lê Thanh</strong>
+        <span>16/07 04:35</span>
+      </div>
+      <p class="post-text">Cán đích thành công rồi các mẹ ơi Tặng mẹ vía sinh thường nhanh  Bé Siêu âm 3,4  Ký mà sinh tận 3,8 ký là sao Mấy Chị oi .  Đau đẻ 20phut ra 1 em ngựa Đực ạ    Trộm vía sữa cũng nhanh về nhờ e dùng vòi sen nước ấm xối và…</p>
+      <div class="chips"><span class="chip">Sữa mẹ / kích sữa</span><span class="chip">Cân nặng bé / tăng cân</span><span class="chip">Thai kỳ / nghén / siêu âm</span></div>
+      <div class="post-stats">
+        <span>❤️ 60</span>
+        <span>💬 23</span>
+        <span>🔁 0</span>
+        <span class="eng">Eng 106</span>
+      </div>
+    </a>
+
+    <a class="post-card" href="https://www.facebook.com/groups/354802416845044/permalink/1351470647178211/" target="_blank" rel="noopener">
+      <div class="post-meta">
+        <strong>Hoàng Linh</strong>
+        <span>16/07 06:39</span>
+      </div>
+      <p class="post-text">Em nhảy ổ thành công 39w . Bạn ngựa trộm vía yêu lắm ạ. To nhất khoa sản hôm ý luôn Con được gần 4 ký1 ạ . Bầu nghén lắm  không ăn được nhiều nên thai kỳ mẹ con chỉ bổ sung ngũ cốc bầu thui ạ ,tv con có kg nặng vượt tiêu…</p>
+      <div class="chips"><span class="chip">Thai kỳ / nghén / siêu âm</span><span class="chip">Sinh nở (thường / mổ)</span><span class="chip">Giấc ngủ / nôn trớ / chăm con</span></div>
+      <div class="post-stats">
+        <span>❤️ 70</span>
+        <span>💬 15</span>
+        <span>🔁 0</span>
+        <span class="eng">Eng 100</span>
+      </div>
+    </a>
+
+    <a class="post-card" href="https://www.facebook.com/groups/354802416845044/permalink/1351387137186562/" target="_blank" rel="noopener">
+      <div class="post-meta">
+        <strong>Hồng Nhung</strong>
+        <span>16/07 04:06</span>
+      </div>
+      <p class="post-text">Con tên là An ,mẹ con nghiện ngắm con ngủ lắm ạ😊😊😊 Sinh 3kg nay 3m tròn được 8kg , con bú SCT kèm ti mẹ  Công mẹ con đi xin vía khắp nơi của mẹ con đó a 🥰🥰  Ngủ từ 8h tối đến 7h sáng dậy 1 tí bú no lại ngủ tít mít, e con…</p>
+      <div class="chips"><span class="chip">Sữa mẹ / kích sữa</span><span class="chip">Cân nặng bé / tăng cân</span><span class="chip">Giấc ngủ / nôn trớ / chăm con</span></div>
+      <div class="post-stats">
+        <span>❤️ 52</span>
+        <span>💬 21</span>
+        <span>🔁 0</span>
+        <span class="eng">Eng 94</span>
+      </div>
+    </a></div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Bảng mẫu W–N–D từ câu hỏi</h2>
+      <p>Trích nhanh để team product/content dùng</p>
+    </div>
+    <div class="card" style="overflow-x:auto">
+      <table>
+        <thead>
+          <tr>
+            <th style="min-width:220px">Post (rút gọn)</th>
+            <th>Want</th>
+            <th>Need</th>
+            <th>Demand</th>
+            <th>L/C</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        <tr>
+          <td>Mẹ con em đã vượt cạn thành công rồi ạ.  Nhả vía sinh nhanh cho các mẹ nè . Trai  yêu 3,5 kg ăn no ngủ kĩ 😍  Đau bụng 30…</td>
+          <td>Xin vía may mắn (con khỏe, thai kỳ suôn sẻ)</td>
+          <td>Cần cải thiện giấc ngủ bé</td>
+          <td>—</td>
+          <td>77/23</td>
+        </tr>
+
+        <tr>
+          <td>Như thế này là đậu rồi phải không các Mom ơi 😳</td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td>81/13</td>
+        </tr>
+
+        <tr>
+          <td>37 tuần thai được 2kg1 ổn không các mom</td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td>31/30</td>
+        </tr>
+
+        <tr>
+          <td>Em bầu 11w cảm giác như không có bầu luôn mọi ngừoi ạ ngực cũng hết đau có ai giống em không ạ</td>
+          <td>—</td>
+          <td>Cần cách xử lý ốm nhẹ khi mang thai an toàn</td>
+          <td>—</td>
+          <td>22/27</td>
+        </tr>
+
+        <tr>
+          <td>Siêu âm thấy con vui ghê các M ạ -nhã vía bé ạ Trộm vía bé 34w được 3,2 ký rồi ạ!  Mình sợ ăn dao lần 2 quá  tập 1 mổ nh…</td>
+          <td>—</td>
+          <td>Cần mốc siêu âm / theo dõi thai kỳ, Cần thông tin / chuẩn bị sinh mổ</td>
+          <td>—</td>
+          <td>45/11</td>
+        </tr>
+
+        <tr>
+          <td>Mẹ con tớ vượt cạn thành công rùi ạ.bé 40w 4,8kg.nhả vía các mẹ tiện cho em xin luôn cách nhiều sữa với ạ</td>
+          <td>Xin vía may mắn (con khỏe, thai kỳ suôn sẻ), Muốn sữa về nhiều, đặc để nuôi con</td>
+          <td>—</td>
+          <td>—</td>
+          <td>27/16</td>
+        </tr>
+
+        <tr>
+          <td>Khoe cân nặng con đi các mom 🤣 Nb : 3kg   6m : 5kg</td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td>14/18</td>
+        </tr>
+
+        <tr>
+          <td>Mẹ con e về đích thành công rồi ạ ❤️ 39w5d em bé 3kg7 ạ ❤️ nhả vía các mom tiện cho em xin vía sữa nhiều sữa đặc ạ🥰</td>
+          <td>Xin vía may mắn (con khỏe, thai kỳ suôn sẻ), Muốn sữa về nhiều, đặc để nuôi con</td>
+          <td>—</td>
+          <td>—</td>
+          <td>15/17</td>
+        </tr>
+
+        <tr>
+          <td>Các mom ơi, bé nhà các mom 4 tháng rưỡi đc bao nhiêu kg ạ? Bé gái nhà e mới đc 5,7kg, nb 2,6kg. Nản quá ạ. Huhu</td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td>12/18</td>
+        </tr>
+
+        <tr>
+          <td>Mới đẻ 3kg1 đầy tháng 3kg7 các mom có ổn ko các mon🥲</td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td>11/18</td>
+        </tr>
+
+        <tr>
+          <td>Ngày e Uống 4 lít nước rồi sao vẫn k có sữa hả các mom😭😭</td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td>12/17</td>
+        </tr>
+
+        <tr>
+          <td>Bé nhà mình 6m chưa lên nổi 6kg bé các bà bao nhiêu cân rồi🥲</td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td>12/17</td>
+        </tr>
+
+        <tr>
+          <td>Sinh tháng 7 mấy bà sao r? t ăn k vô ngủ k không dc. Sữa không có con khóc đêm 😌</td>
+          <td>—</td>
+          <td>Cần cải thiện giấc ngủ bé</td>
+          <td>—</td>
+          <td>11/17</td>
+        </tr>
+
+        <tr>
+          <td>Sau sinh bao lâu các mom bế con đi trà sữa với càfe vậy ạ . Con em 5 tháng rồi bé.o quá đi đâu cũng mất tự tin nên chưa …</td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td>11/17</td>
+        </tr>
+
+        <tr>
+          <td>Ăn trứng vịt lộn và uống nước mía là con tăng cân nhanh à các mẹ</td>
+          <td>Muốn bé tăng cân đạt chuẩn / bụ bẫm</td>
+          <td>—</td>
+          <td>Trứng vịt lộn (bồi bổ)</td>
+          <td>12/16</td>
+        </tr>
+
+        <tr>
+          <td>Em mới sinh 3 hôm mà chưa thấy sữa về thì phải kích làm sao ạ.🥲</td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td>10/17</td>
+        </tr>
+
+        <tr>
+          <td>các mẹ ơi lá cây đinh lăng hay cây đinh lăng là uống có nhiều sữa ạ</td>
+          <td>Muốn sữa về nhiều, đặc để nuôi con</td>
+          <td>—</td>
+          <td>—</td>
+          <td>10/17</td>
+        </tr>
+
+        <tr>
+          <td>Nghĩ cũng chán các mom ạ sinh xong mà người nó mập gì đâu ,thua con hà mã đúng tên 😃</td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td>11/16</td>
+        </tr>
+
+        <tr>
+          <td>Làm sao để về dáng đây ạ😓😓😓 con em nó bi ba bi bô rồi mà em vẫn beo ục ịch quá🤦‍♀️</td>
+          <td>Muốn về dáng sau sinh</td>
+          <td>—</td>
+          <td>—</td>
+          <td>11/16</td>
+        </tr>
+
+        <tr>
+          <td>Đẻ mổ mấy năm các mom về dáng thế nhỉ</td>
+          <td>Muốn về dáng sau sinh</td>
+          <td>Cần thông tin / chuẩn bị sinh mổ</td>
+          <td>—</td>
+          <td>11/16</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Khuyến nghị hành động</h2>
+      <p>Áp dụng ngay cho content · product · community</p>
+    </div>
+    <div class="card"><div class="rec"><span class="rec-tag">Content</span><p>Series &#x27;chuẩn cân theo tháng tuổi&#x27; + checklist kích sữa 7 ngày — trả lời đúng 2 pain lớn nhất.</p></div>
+<div class="rec"><span class="rec-tag">Product</span><p>Combo &#x27;nghén → ngũ cốc/dễ uống&#x27; và &#x27;bé biếng ăn → siro + D3K2 + sleep routine&#x27; khớp narrative đang win trên nhóm.</p></div>
+<div class="rec"><span class="rec-tag">Community</span><p>Template nhả vía có cấu trúc: tuổi bé | kg | vấn đề cũ | giải pháp | kết quả — tăng trust, giảm spam.</p></div>
+<div class="rec"><span class="rec-tag">Service</span><p>Tư vấn ẩn danh (chat/hotline) cho kích sữa &amp; về dáng — đúng insight ẩn danh cao.</p></div>
+<div class="rec"><span class="rec-tag">Timing</span><p>Post/reply khung 14h–18h (giờ VN) khi volume bài cao nhất.</p></div>
+<div class="rec"><span class="rec-tag">Risk</span><p>Tách white-list khoa học vs folklore (sữa ông thọ, chân giò…) — cơ hội content myth-busting uy tín.</p></div></div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Tóm tắt điều hành (1 phút)</h2>
+    </div>
+    <div class="card">
+      <ol style="margin:0; padding-left: 1.2rem; color: var(--muted); font-size: 14.5px;">
+        <li style="margin-bottom:8px"><strong style="color:var(--ink)">Want #1:</strong> Bé khỏe – tăng cân – ngủ ngoan; mẹ sinh thường / nhiều sữa / về dáng.</li>
+        <li style="margin-bottom:8px"><strong style="color:var(--ink)">Need #1:</strong> Kích sữa + xử lý biếng ăn/nôn trớ + dinh dưỡng khi nghén/thai nhỏ.</li>
+        <li style="margin-bottom:8px"><strong style="color:var(--ink)">Demand #1:</strong> Ngũ cốc bầu, siro ăn ngon, D3K2, sữa CT, thực phẩm lợi sữa.</li>
+        <li style="margin-bottom:8px"><strong style="color:var(--ink)">Insight #1:</strong> “Nhả vía” = kênh phân phối niềm tin; sản phẩm thắng khi gắn story trước–sau có số liệu.</li>
+        <li><strong style="color:var(--ink)">Cơ hội:</strong> Content myth-busting + checklist theo tuần thai/tháng tuổi + tư vấn ẩn danh.</li>
+      </ol>
+    </div>
+  </section>
+
+  <footer class="footer">
+    Generated from Apify run · Group “Tâm Sự Mẹ Bầu” · 97 posts analyzed · 17/07/2026 17:21<br/>
+    Phân tích rule-based tiếng Việt (keyword + heuristic). Không thay thế tư vấn y khoa.
+  </footer>
+</div>
+
+<script>
+const topicLabels = ["Cân nặng bé / tăng cân", "Xin vía / cộng đồng", "Thai kỳ / nghén / siêu âm", "Sữa mẹ / kích sữa", "Giấc ngủ / nôn trớ / chăm con", "Sản phẩm / bán hàng", "Sinh nở (thường / mổ)", "Khác", "Về dáng / cân mẹ sau sinh", "Sức khỏe mẹ bầu"];
+const topicValues = [55, 41, 37, 30, 27, 19, 14, 13, 10, 6];
+const typeLabels = ["Câu hỏi / xin lời khuyên", "Nhả vía / success story", "Soft-sell / sản phẩm", "Chia sẻ chung", "Lo lắng / tiêu cực"];
+const typeValues = [73, 37, 32, 14, 14];
+const journeyLabels = ["Mang thai (nghén / siêu âm / dinh dưỡng)", "Chuẩn bị sinh / vượt cạn", "0–6 tháng: sữa & giấc ngủ", "Tăng cân & biếng ăn bé", "Về dáng mẹ"];
+const journeyValues = [37, 14, 47, 55, 10];
+const dayLabels = ["07-16", "07-17"];
+const dayValues = [55, 42];
+const hourLabels = ["00h", "01h", "02h", "03h", "04h", "05h", "06h", "07h", "08h", "09h", "10h", "11h", "12h", "13h", "14h", "15h", "16h", "17h", "18h", "19h", "20h", "21h", "22h", "23h"];
+const hourValues = [0, 0, 0, 0, 0, 0, 1, 0, 4, 5, 8, 11, 2, 4, 11, 17, 11, 4, 11, 1, 2, 4, 1, 0];
+
+const palette = ['#e11d48','#db2777','#a855f7','#7c3aed','#2563eb','#0891b2','#059669','#d97706','#64748b'];
+
+new Chart(document.getElementById('chartTopics'), {
+  type: 'doughnut',
+  data: {
+    labels: topicLabels,
+    datasets: [{ data: topicValues, backgroundColor: palette, borderWidth: 0 }]
+  },
+  options: {
+    plugins: { legend: { position: 'right', labels: { boxWidth: 12, font: { size: 11 } } } },
+    maintainAspectRatio: false
+  }
+});
+
+new Chart(document.getElementById('chartTypes'), {
+  type: 'bar',
+  data: {
+    labels: typeLabels,
+    datasets: [{
+      data: typeValues,
+      backgroundColor: '#f472b6',
+      borderRadius: 8,
+      label: 'Số bài'
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { color: '#fce7f3' }, ticks: { precision: 0 } },
+      y: { grid: { display: false } }
+    },
+    maintainAspectRatio: false
+  }
+});
+
+new Chart(document.getElementById('chartJourney'), {
+  type: 'bar',
+  data: {
+    labels: journeyLabels,
+    datasets: [{
+      data: journeyValues,
+      backgroundColor: ['#f9a8d4','#c4b5fd','#93c5fd','#6ee7b7','#fcd34d'],
+      borderRadius: 10,
+      label: 'Bài chạm giai đoạn'
+    }]
+  },
+  options: {
+    plugins: { legend: { display: false } },
+    scales: {
+      y: { beginAtZero: true, grid: { color: '#fce7f3' }, ticks: { precision: 0 } },
+      x: { ticks: { font: { size: 10 } }, grid: { display: false } }
+    },
+    maintainAspectRatio: false
+  }
+});
+
+new Chart(document.getElementById('chartDays'), {
+  type: 'line',
+  data: {
+    labels: dayLabels,
+    datasets: [{
+      data: dayValues,
+      borderColor: '#e11d48',
+      backgroundColor: 'rgba(225,29,72,.12)',
+      fill: true,
+      tension: .35,
+      pointRadius: 4,
+      label: 'Posts/ngày'
+    }]
+  },
+  options: {
+    plugins: { legend: { display: false } },
+    scales: {
+      y: { beginAtZero: true, ticks: { precision: 0 }, grid: { color: '#fce7f3' } },
+      x: { grid: { display: false } }
+    },
+    maintainAspectRatio: false
+  }
+});
+
+new Chart(document.getElementById('chartHours'), {
+  type: 'bar',
+  data: {
+    labels: hourLabels,
+    datasets: [{
+      data: hourValues,
+      backgroundColor: '#a78bfa',
+      borderRadius: 4,
+      label: 'Posts/giờ'
+    }]
+  },
+  options: {
+    plugins: { legend: { display: false } },
+    scales: {
+      y: { beginAtZero: true, ticks: { precision: 0 }, grid: { color: '#fce7f3' } },
+      x: { ticks: { maxRotation: 0, font: { size: 9 } }, grid: { display: false } }
+    },
+    maintainAspectRatio: false
+  }
+});
+</script>
+</body>
+</html>
